@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest,NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import crypto from "crypto";
 
 
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const { longUrl } = body;
@@ -41,10 +41,10 @@ export async function POST(request: Request) {
                        INSERT INTO urls (short_code,original_url)
                         VALUES ($1, $2)`, [shortCode, longUrl]
                 );
-                const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://localhost:3000`;
                 return NextResponse.json({
-                    shortUrl: `${baseUrl}/${shortCode}`,
+                shortUrl: `${request.nextUrl.origin}/${shortCode}`,
                 });
+                
             } catch (error: any) {
                 if (error.code === "23505") {
                     continue;
