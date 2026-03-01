@@ -1,5 +1,5 @@
 import { pool } from "@/lib/db";
-import { NextRequest } from "next/server";
+import { NextRequest,NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: { code: string } }) {
     const { code } =  params;
