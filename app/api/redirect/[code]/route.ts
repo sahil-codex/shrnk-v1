@@ -1,7 +1,6 @@
 import { pool } from "@/lib/db";
-import { NextRequest,NextResponse } from "next/server";
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ code: string }> }) {
+export async function GET(request: Request, { params }: { params: Promise<{ code: string }> }) {
     const { code } = await params;
 
     try {
@@ -16,14 +15,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         if (result.rows.length === 0) {
             return new Response('Not Found', { status: 404 });
         }
-       
-         return new Response(null, {
-           status: 302,
-             headers: { 
+
+        return new Response(null, {
+            status: 301,
+            headers: { 
                 Location: result.rows[0].original_url,
-             },
-          }
-        );
+            },
+        });
     } catch (error: any) {
         console.error("Redirect error:", error);
         return new Response('Internal Server Error', { status: 500 });

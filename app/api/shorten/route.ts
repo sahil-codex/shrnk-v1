@@ -1,10 +1,8 @@
-import { NextRequest,NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import crypto from "crypto";
 
-
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
     try {
         const body = await request.json();
         const { longUrl } = body;
@@ -32,19 +30,19 @@ export async function POST(request: NextRequest) {
             );
         }
 
-
         const maxAttempts = 5;
         for (let i = 0; i < maxAttempts; i++) {
             const shortCode = crypto.randomBytes(4).toString("hex");
             try {
                 await pool.query(`
-                       INSERT INTO urls (short_code,original_url)
-                        VALUES ($1, $2)`, [shortCode, longUrl]
+                    INSERT INTO urls (short_code, original_url)
+                    VALUES ($1, $2)`, [shortCode, longUrl]
                 );
+                const url = new URL(request.url);
+                const baseUrl = `${url.protocol}//${url.host}`;
                 return NextResponse.json({
-                shortUrl: `${request.nextUrl.origin}/${shortCode}`,
+                    shortUrl: `${baseUrl}/${shortCode}`,
                 });
-                
             } catch (error: any) {
                 if (error.code === "23505") {
                     continue;
@@ -64,6 +62,4 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-
-
 };
