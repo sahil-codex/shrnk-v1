@@ -1,6 +1,6 @@
 # Shrnk - URL Shortener
 
-A simple and efficient URL shortening service built with Next.js 13+ App Router.
+A simple and efficient URL shortening service built with Next.js 16 App Router.
 
 ## Features
 
@@ -11,10 +11,10 @@ A simple and efficient URL shortening service built with Next.js 13+ App Router.
 
 ## Tech Stack
 
-- **Frontend**: Next.js 13+ with App Router, React, TypeScript
+- **Frontend**: Next.js 16 with App Router, React, TypeScript
 - **Styling**: Tailwind CSS
 - **Database**: PostgreSQL
-- **Deployment**: Vercel (recommended) or any Node.js hosting platform
+- **Deployment**: Vercel 
 
 ## Getting Started
 
@@ -58,14 +58,6 @@ DATABASE_URL=postgresql://username:password@localhost:5432/your_database_name
 
 For production, create a `.env.production` file with your production database URL.
 
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add your `DATABASE_URL` environment variable in Vercel dashboard
-4. Deploy!
 
 ### Other Platforms
 
